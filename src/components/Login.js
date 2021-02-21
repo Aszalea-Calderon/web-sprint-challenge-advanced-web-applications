@@ -1,29 +1,50 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const Login = () => {
+const INITAL_STATE = {
+  username: null,
+  password: null,
+};
+
+const Login = (props) => {
+  const [form, setForm] = useState(INITAL_STATE);
+  const { push } = props.history;
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
 
-  useEffect(()=>{
+  const submit = (e) => {
+    e.preventDefault();
+
     axios
-      .delete(`http://localhost:5000/api/colors/1`, {
-        headers:{
-          'authorization': "ahuBHejkJJiMDhmODZhZi0zaeLTQ4ZfeaseOGZgesai1jZWYgrTA07i73Gebhu98"
-        }
+      .post("http://localhost:5000/api/login", form)
+      .then((res) => {
+        //console.log(res.data.payload)
+        localStorage.setItem("token", res.data.payload);
+        push("/bubble-page");
       })
-      .then(res=>{
-        axios.get(`http://localhost:5000/api/colors`, {
-          headers:{
-            'authorization': ""
-          }
-        })
-        .then(res=> {
-          console.log(res);
-        });
-        console.log(res);
-      })
-  });
+      .catch((err) => {
+        console.error("Our error", err);
+      });
+    // axios
+    // .delete(`http://localhost:5000/api/colors/1`, {
+    //   headers: {
+    //     authorization:
+    //       "ahuBHejkJJiMDhmODZhZi0zaeLTQ4ZfeaseOGZgesai1jZWYgrTA07i73Gebhu98",
+    //   },
+    // })
+    // .then((res) => {
+    //   axios
+    //     .get(`http://localhost:5000/api/colors`, {
+    //       headers: {
+    //         authorization: "",
+    //       },
+    //     })
+    //     .then((res) => {
+    //       console.log(res);
+    //     });
+    //   console.log(res);
+    // });
+  };
 
   return (
     <>
