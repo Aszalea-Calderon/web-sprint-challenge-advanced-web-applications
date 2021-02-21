@@ -11,6 +11,7 @@ const BubblePage = () => {
     <>
       {/* <ColorList colors={colorList} updateColors={setColorList} />
       <Bubbles colors={colorList} /> */}
+      <h1>Private Bubbles</h1>
     </>
   );
 };

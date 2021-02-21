@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 const INITAL_STATE = {
-  username: null,
-  password: null,
+  username: "",
+  password: "",
 };
 
 const Login = (props) => {
@@ -46,12 +46,40 @@ const Login = (props) => {
     // });
   };
 
+  //OnChange
+  const change = (e) => {
+    setForm({
+      ...form,
+      [e.target.id]: e.target.value,
+    });
+  };
+
   return (
     <>
-      <h1>
-        Welcome to the Bubble App!
-        <p>Build a login page here</p>
-      </h1>
+      <h1>Welcome to the Bubble App!</h1>
+
+      <form onSubmit={submit}>
+        <label htmlFor="username">
+          <input
+            type="text"
+            id="username"
+            onChange={change}
+            placeholder="Username"
+            value={form.username}
+          />
+        </label>
+        <label htmlFor="login">
+          <input
+            type="text"
+            id="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={change}
+          />
+        </label>
+
+        <button>Login</button>
+      </form>
     </>
   );
 };
